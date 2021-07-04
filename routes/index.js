@@ -37,11 +37,11 @@ router.post('/register', async function(req, res, next) {
   if (email.length > 0 && password.length > 0 && firstName.length > 0) {
     // create new user
     try {
-      const excryptedPassword = await bcrypt.hash(password, 10);
+      const encryptedPassword = await bcrypt.hash(password, 10);
       const newUser = await UserModel.create({
         firstName,
         email,
-        password: excryptedPassword,
+        password: encryptedPassword,
         lastName: lastName.length > 0 ? lastName : ""
       });
       return res.status(200).send(newUser);
