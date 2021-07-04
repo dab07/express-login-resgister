@@ -17,18 +17,33 @@ router.post('/login', async function(req, res, next) {
         email
       });
       if (user === null) {
-        return res.status(404).send("User does not exist");
+        return res.status(404).send({
+          status: "failed",
+          error: "User does not exist"
+        });
       }
       if (await bcrypt.compare(password, user.password)) {
-        return res.status(200).send("Login Success: " + JSON.stringify(user));
+        return res.status(200).send({
+          status: "success",
+          user
+        });
       }
-      return res.status(401).send("Invalid Credentials");
+      return res.status(401).send({
+        status: "failed",
+        error: "Invalid Credentials"
+      });
     } catch (error) {
-      return res.status(500).send("Something went wrong " + JSON.stringify(error));
+      return res.status(500).send({
+        status: "failed",
+        error
+      });
     }
   }
 
-  return res.status(400).send("email and password are required");
+  return res.status(400).send({
+    status: "failed",
+    error: "email and password are required"
+  });
 });
 
 router.post('/register', async function(req, res, next) {
@@ -42,15 +57,24 @@ router.post('/register', async function(req, res, next) {
         firstName,
         email,
         password: encryptedPassword,
-        lastName: lastName.length > 0 ? lastName : ""
+        lastName
       });
-      return res.status(200).send(newUser);
+      return res.status(200).send({
+        status: "success",
+        user: newUser
+      });
     } catch (error) {
-      return res.status(500).send("Something went wrong " + JSON.stringify(error));
+      return res.status(500).send({
+        status: "failed",
+        error
+      });
     }
   }
 
-  return res.status(400).send("firstName, email and password are required");
+  return res.status(400).send({
+    status: "failed",
+    error: "firstName, email and password are required"
+  });
 });
 
 
