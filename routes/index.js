@@ -28,7 +28,7 @@ router.post('/login', async function(req, res, next) {
     }
   }
 
-  return res.status(400).send("firstName, email and password are required");
+  return res.status(400).send("email and password are required");
 });
 
 router.post('/register', async function(req, res, next) {
@@ -50,7 +50,7 @@ router.post('/register', async function(req, res, next) {
     }
   }
 
-  return res.status(400).send("email and password are required");
+  return res.status(400).send("firstName, email and password are required");
 });
 
 
